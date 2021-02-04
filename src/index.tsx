@@ -5,7 +5,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 interface SquarePropsInterface {
-  value: number;
+  value: string;
+  onClick: () => void;
 }
 
 interface SquareStateInterface {
@@ -16,22 +17,22 @@ class Square extends React.Component<
   SquarePropsInterface,
   SquareStateInterface
 > {
-  constructor(props: SquarePropsInterface) {
-    super(props);
-    this.state = {
-      value: '',
-    };
-  }
+  // constructor(props: SquarePropsInterface) {
+  //   super(props);
+  //   this.state = {
+  //     value: '',
+  //   };
+  // }
 
   render() {
-    const { value } = this.state;
+    const { value, onClick } = this.props;
 
     return (
       <button
         className="square"
         type="button"
         onClick={() => {
-          this.setState({ value: 'X' });
+          onClick();
         }}
       >
         {value}
@@ -40,9 +41,32 @@ class Square extends React.Component<
   }
 }
 
-class Board extends React.Component {
+interface BoardPropsInterface {
+  squares: string[];
+}
+
+interface BoardStateInterface {
+  squares: string[];
+}
+class Board extends React.Component<BoardPropsInterface, BoardStateInterface> {
+  constructor(props: BoardPropsInterface) {
+    super(props);
+    this.state = {
+      squares: Array(9).fill('') as string[],
+    };
+  }
+
+  handleClick(i: number) {
+    const { state } = this;
+    const squares: string[] = state.squares.slice();
+    squares[i] = 'X';
+    this.setState({ squares });
+  }
+
   renderSquare = (i: number) => {
-    return <Square value={i} />;
+    const { squares } = this.state;
+
+    return <Square value={squares[i]} onClick={() => this.handleClick(i)} />;
   };
 
   render() {
@@ -76,7 +100,7 @@ class Game extends React.Component {
     return (
       <div className="game">
         <div className="game-board">
-          <Board />
+          <Board squares={Array(9).fill('')} />
         </div>
         <div className="game-info">
           <div>{/* status */}</div>

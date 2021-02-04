@@ -1,6 +1,6 @@
 /* eslint-disable react/prefer-stateless-function */
 /* eslint-disable max-classes-per-file */
-import React from 'react';
+import React, { FC } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
@@ -9,7 +9,7 @@ interface SquarePropsInterface {
   onClick: () => void;
 }
 
-const Square = (props: SquarePropsInterface) => {
+const Square: FC<SquarePropsInterface> = (props) => {
   const { value, onClick } = props;
 
   return (
@@ -108,7 +108,7 @@ class Board extends React.Component<BoardPropsInterface, BoardStateInterface> {
   }
 }
 
-const Game = () => {
+const Game: FC = () => {
   return (
     <div className="game">
       <div className="game-board">

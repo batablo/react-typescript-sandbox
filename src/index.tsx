@@ -25,20 +25,22 @@ interface BoardPropsInterface {
 
 interface BoardStateInterface {
   squares: string[];
+  xIsNext: boolean;
 }
 class Board extends React.Component<BoardPropsInterface, BoardStateInterface> {
   constructor(props: BoardPropsInterface) {
     super(props);
     this.state = {
       squares: Array(9).fill('') as string[],
+      xIsNext: true,
     };
   }
 
   handleClick(i: number) {
-    const { state } = this;
-    const squares: string[] = state.squares.slice();
-    squares[i] = 'X';
-    this.setState({ squares });
+    const { squares, xIsNext } = this.state;
+    const sliceSquares: string[] = squares.slice();
+    sliceSquares[i] = xIsNext ? 'X' : 'O';
+    this.setState({ squares: sliceSquares, xIsNext: !xIsNext });
   }
 
   renderSquare = (i: number) => {
@@ -48,7 +50,8 @@ class Board extends React.Component<BoardPropsInterface, BoardStateInterface> {
   };
 
   render() {
-    const status = 'Next player: X';
+    const { xIsNext } = this.state;
+    const status = `Next player: ${xIsNext ? 'X' : 'O'}`;
 
     return (
       <div>

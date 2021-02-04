@@ -9,37 +9,15 @@ interface SquarePropsInterface {
   onClick: () => void;
 }
 
-interface SquareStateInterface {
-  value: string;
-}
+const Square = (props: SquarePropsInterface) => {
+  const { value, onClick } = props;
 
-class Square extends React.Component<
-  SquarePropsInterface,
-  SquareStateInterface
-> {
-  // constructor(props: SquarePropsInterface) {
-  //   super(props);
-  //   this.state = {
-  //     value: '',
-  //   };
-  // }
-
-  render() {
-    const { value, onClick } = this.props;
-
-    return (
-      <button
-        className="square"
-        type="button"
-        onClick={() => {
-          onClick();
-        }}
-      >
-        {value}
-      </button>
-    );
-  }
-}
+  return (
+    <button className="square" type="button" onClick={onClick}>
+      {value}
+    </button>
+  );
+};
 
 interface BoardPropsInterface {
   squares: string[];

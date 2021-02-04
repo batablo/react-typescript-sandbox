@@ -23,6 +23,28 @@ interface BoardPropsInterface {
   squares: string[];
 }
 
+const calculateWinner = (squares: string[]): string => {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+
+  return '';
+};
+
 interface BoardStateInterface {
   squares: string[];
   xIsNext: boolean;
@@ -39,6 +61,10 @@ class Board extends React.Component<BoardPropsInterface, BoardStateInterface> {
   handleClick(i: number) {
     const { squares, xIsNext } = this.state;
     const sliceSquares: string[] = squares.slice();
+    // 既に決着が着いているか、マスが埋まっていたらreturn
+    if (calculateWinner(sliceSquares) || sliceSquares[i]) {
+      return;
+    }
     sliceSquares[i] = xIsNext ? 'X' : 'O';
     this.setState({ squares: sliceSquares, xIsNext: !xIsNext });
   }
@@ -50,8 +76,14 @@ class Board extends React.Component<BoardPropsInterface, BoardStateInterface> {
   };
 
   render() {
-    const { xIsNext } = this.state;
-    const status = `Next player: ${xIsNext ? 'X' : 'O'}`;
+    const { squares, xIsNext } = this.state;
+    const winner = calculateWinner(squares);
+    let status;
+    if (winner) {
+      status = `Winner: ${winner}`;
+    } else {
+      status = `Next player: ${xIsNext ? 'X' : 'O'}`;
+    }
 
     return (
       <div>

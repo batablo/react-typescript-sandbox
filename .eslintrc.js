@@ -91,9 +91,7 @@ module.exports = {
         explicitSpread: 'ignore',
       },
     ],
-    // 'import React'する時にでたエラーをしゃあなしで回避。
-    'no-use-before-define': 'off',
-    '@typescript-eslint/no-use-before-define': ['error'],
+    'no-use-before-define': ['off'],
     'prefer-arrow/prefer-arrow-functions': [
       'error',
       {

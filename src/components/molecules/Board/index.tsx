@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Square } from './Square';
+import { Square } from 'components/atoms/Square';
 
 export interface BoardPropsInterface {
   squares: string[];

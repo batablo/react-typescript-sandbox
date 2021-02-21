@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Board } from './components/Board';
+import { Board } from 'components/molecules/Board';
 import './index.css';
 
 type Square = 'X' | 'O' | '';
@@ -53,7 +53,6 @@ class Game extends React.Component<unknown, GameStateInterface> {
   handleClick = (i: number): void => {
     const { history, xIsNext, stepNumber } = this.state;
     const pastHistory = history.slice(0, stepNumber + 1);
-    console.log(pastHistory);
     const current = pastHistory[pastHistory.length - 1];
     const squares = current.squares.slice();
     if (calculateWinner(squares) || squares[i]) {

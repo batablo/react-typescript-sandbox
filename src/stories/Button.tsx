@@ -39,13 +39,17 @@ export const Button: React.FC<ButtonProps> = ({
     ? 'storybook-button--primary'
     : 'storybook-button--secondary';
 
+  const styles = backgroundColor
+    ? { backgroundColor: `${backgroundColor}` }
+    : { backgroundColor: '#F8E71C' };
+
   return (
     <button
       type="button"
       className={['storybook-button', `storybook-button--${size}`, mode].join(
         ' ',
       )}
-      style={{ backgroundColor }}
+      style={styles}
       {...props}
     >
       {label}

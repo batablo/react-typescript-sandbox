@@ -83,14 +83,7 @@ module.exports = {
         extensions: ['.jsx', '.tsx'],
       },
     ],
-    'react/jsx-props-no-spreading': [
-      'error',
-      {
-        html: 'enforce',
-        custom: 'enforce',
-        explicitSpread: 'ignore',
-      },
-    ],
+    'react/jsx-props-no-spreading': ['off'],
     'no-use-before-define': ['off'],
     'prefer-arrow/prefer-arrow-functions': [
       'error',
@@ -100,6 +93,7 @@ module.exports = {
         classPropertiesAllowed: false,
       },
     ],
+    'import/no-extraneous-dependencies': ['off'],
   },
   overrides: [
     {

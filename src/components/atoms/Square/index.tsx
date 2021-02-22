@@ -2,7 +2,13 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 
 export interface SquarePropsInterface {
+  /**
+   * マス目の値
+   */
   value: string;
+  /**
+   * クリックイベント
+   */
   onClick: () => void;
 }
 
@@ -19,6 +25,7 @@ const Button = styled.button`
   padding: 0;
   margin-top: -1px;
   margin-right: -1px;
+  margin-left: 0;
   font-size: 24px;
   font-weight: bold;
   line-height: 34px;

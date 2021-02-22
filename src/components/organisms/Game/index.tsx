@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 import { Board } from 'components/molecules/Board';
+import { Moves } from 'components/molecules/Moves';
 
 type Square = 'X' | 'O' | '';
 
@@ -8,6 +9,10 @@ export type Squares = {
   squares: Square[];
 };
 
+/**
+ * 勝利判定のロジック
+ * 縦横ナナメで同じ値が揃っていたら、その値を返す
+ */
 const calculateWinner = (squares: string[]) => {
   const lines = [
     [0, 1, 2],
@@ -39,6 +44,10 @@ export const Game: FC = () => {
   const [xIsNext, setXIsNext] = useState<boolean>(true);
   const [stepNumber, setStepNumber] = useState<number>(0);
 
+  /**
+   * マス目をクリックしたときのロジック
+   * 保持されてる履歴(history)から最新の手番を抜き出して、各stateを更新する
+   */
   const handleClick = (i: number): void => {
     const pastHistory = history.slice(0, stepNumber + 1);
     const current = pastHistory[pastHistory.length - 1];
@@ -52,26 +61,15 @@ export const Game: FC = () => {
     setStepNumber(pastHistory.length);
   };
 
+  // 過去の手番へ戻る時のロジック
   const jumpTo = (step: number) => {
     setXIsNext(step % 2 === 0);
     setStepNumber(step);
   };
 
+  // 現在の手番
   const current = history[stepNumber];
   const winner = calculateWinner(current.squares);
-
-  const moves = history.map((_, move: number) => {
-    const desc = move ? `Go to move #${move}` : `Go to move start`;
-
-    return (
-      // eslint-disable-next-line react/no-array-index-key
-      <li key={move}>
-        <button type="button" onClick={() => jumpTo(move)}>
-          {desc}
-        </button>
-      </li>
-    );
-  });
 
   let status;
   if (winner) {
@@ -87,7 +85,7 @@ export const Game: FC = () => {
       </GameBoard>
       <GameInfo>
         <Status>{status}</Status>
-        <MovesList>{moves}</MovesList>
+        <Moves history={history} onClick={jumpTo} />
       </GameInfo>
     </GameWrapper>
   );
@@ -108,8 +106,4 @@ const GameInfo = styled.div`
 
 const Status = styled.div`
   margin-bottom: 10px;
-`;
-
-const MovesList = styled.ol`
-  padding-left: 30px;
 `;

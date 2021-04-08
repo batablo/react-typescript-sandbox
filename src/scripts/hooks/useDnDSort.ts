@@ -1,3 +1,5 @@
+// NOTE: events.ref内のelement引数に3- 再代入してるので怒られてるけど一旦無視
+/* eslint-disable no-param-reassign */
 import React, { useRef, useState } from 'react';
 
 // 座標の型
@@ -171,8 +173,6 @@ export const useDnDSort = <T>(defaultItems: T[]): DnDSortResult<T>[] => {
             const { dndItems, dragElement, pointerPosition } = state;
 
             // 位置をリセットする
-            // NOTE: 引数に再代入してるので怒られてるけど一旦無視
-            // eslint-disable-next-line no-param-reassign
             element.style.transform = '';
 
             const { left: x, top: y } = element.getBoundingClientRect();
@@ -190,13 +190,32 @@ export const useDnDSort = <T>(defaultItems: T[]): DnDSortResult<T>[] => {
               const dragY = dragElement.position.y - position.y;
 
               // 入れ替え時のズレをなくす
-              // NOTE: 引数に再代入してるので怒られてるけど一旦無視
-              // eslint-disable-next-line no-param-reassign
               element.style.transform = `translate(${dragX}px, ${dragY}px)`;
 
               // マウスポインターの位置も再計算してズレをなくす
               pointerPosition.x -= dragX;
               pointerPosition.y -= dragY;
+            }
+
+            // ドラッグ要素以外の要素をアニメーションさせながら移動させる
+            if (dragElement?.key !== key) {
+              const item = dndItems[itemIndex];
+
+              // 前回の座標を計算
+              // eslint-disable-next-line no-shadow
+              const x = item?.position.x - position.x;
+              // eslint-disable-next-line no-shadow
+              const y = item?.position.y - position.y;
+
+              // 要素を前回の位置に留めておく
+              element.style.transition = '';
+              element.style.transform = `translate(${x}px,${y}px)`;
+
+              // 一フレーム後に要素をアニメーションさせながら元に位置に戻す
+              requestAnimationFrame(() => {
+                element.style.transform = '';
+                element.style.transition = 'all 300ms';
+              });
             }
 
             // 要素を更新する

@@ -34,7 +34,7 @@ interface DnDSortResult<T> {
 }
 
 /**
- * マウスポインターが要素と重なっているか判定する
+ * 要素が重なっているか判定
  *
  * @param {MouseEvent} event - マウスイベント
  * @param {HTMLElement} element - 重なりを判定する要素
@@ -88,7 +88,6 @@ export const useDnDSort = <T>(defaultItems: T[]): DnDSortResult<T>[] => {
     dragStyle.cursor = 'grabbling';
     dragStyle.transform = `translate(${x}px, ${y}px)`;
 
-    // console.log(state);
     // まだ確認できない場合は処理を終了する
     if (!state.canCheckHovered) return;
 
@@ -110,6 +109,7 @@ export const useDnDSort = <T>(defaultItems: T[]): DnDSortResult<T>[] => {
 
     if (hoveredIndex !== -1) {
       // ホバーしていればコンソール画面に"Hello World!"を表示
+      console.log('Hello World');
     }
   };
 
@@ -146,7 +146,28 @@ export const useDnDSort = <T>(defaultItems: T[]): DnDSortResult<T>[] => {
         value,
         key, // ref.keys内の値を参照するように修正
         events: {
-          ref: () => void 0,
+          ref: (element: HTMLElement | null) => {
+            if (!element) return;
+
+            const { dndItems } = state;
+
+            // 位置をリセットする
+            // NOTE: 引数に再代入してるので怒られてるけど一旦無視
+            // eslint-disable-next-line no-param-reassign
+            element.style.transform = '';
+
+            const { left: x, top: y } = element.getBoundingClientRect();
+            const position: Position = { x, y };
+
+            const itemIndex = dndItems.findIndex((item) => item.key === key);
+
+            // 要素がなければ新しく追加して処理を終わる
+            if (itemIndex === -1)
+              dndItems.push({ key, value, element, position });
+
+            // 要素を更新する
+            state.dndItems[itemIndex] = { key, value, element, position };
+          },
           onMouseDown: (event: React.MouseEvent<HTMLElement>) => {
             // ドラッグする要素(DOM)
             const element = event.currentTarget;

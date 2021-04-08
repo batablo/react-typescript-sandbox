@@ -23,24 +23,9 @@ const imageList: string[] = [
   sample09,
 ];
 
-// useDnDSort()の結果の型
-interface Result {
-  // key propsに設定する文字列
-  key: string;
-
-  // 配列内の画像URL文字列
-  value: string;
-
-  // ドラッグ&ドロップ処理で使うイベントのコールバック関数
-  events: {
-    ref: (value: any) => void;
-    onMouseDown: (event: any) => void;
-  };
-}
-
 export const DragAndDrop: FC = () => {
   // ソート結果とイベントを含んだ配列を受け取る
-  const results: Result[] = useDnDSort(imageList);
+  const results = useDnDSort(imageList);
 
   return (
     <Body>

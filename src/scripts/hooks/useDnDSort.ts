@@ -58,7 +58,7 @@ const isHover = (event: MouseEvent, element: HTMLElement): boolean => {
 
 export const useDnDSort = <T>(defaultItems: T[]): DnDSortResult<T>[] => {
   // 描画内容と紐づいているのでuseStateで管理する
-  const [items] = useState(defaultItems);
+  const [items, setItems] = useState(defaultItems);
 
   // 状態をrefで管理する
   const state = useRef<DnDRef<T>>({
@@ -107,9 +107,28 @@ export const useDnDSort = <T>(defaultItems: T[]): DnDSortResult<T>[] => {
       ({ element }, index) => index !== dragIndex && isHover(event, element),
     );
 
+    // ホバーされている要素があれば、ドラッグしている要素と入れ替える
     if (hoveredIndex !== -1) {
-      // ホバーしていればコンソール画面に"Hello World!"を表示
-      console.log('Hello World');
+      // カーソルの位置を更新
+      state.pointerPosition.x = clientX;
+      state.pointerPosition.y = clientY;
+
+      // 要素を入れ替える
+      dndItems.splice(dragIndex, 1);
+      dndItems.splice(hoveredIndex, 0, dragElement);
+
+      // NOTE: { left: x, top: y }にしたかったが、
+      //       x,yの変数が既に使われているのでrectX, rectYとして定義
+      const {
+        left: rectX,
+        top: rectY,
+      } = dragElement.element.getBoundingClientRect();
+
+      // ドラッグ要素の座標を更新
+      dragElement.position = { x: rectX, y: rectY };
+
+      // 再描画する
+      setItems(dndItems.map((v) => v.value));
     }
   };
 

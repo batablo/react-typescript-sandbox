@@ -168,7 +168,7 @@ export const useDnDSort = <T>(defaultItems: T[]): DnDSortResult<T>[] => {
           ref: (element: HTMLElement | null) => {
             if (!element) return;
 
-            const { dndItems } = state;
+            const { dndItems, dragElement, pointerPosition } = state;
 
             // 位置をリセットする
             // NOTE: 引数に再代入してるので怒られてるけど一旦無視
@@ -184,9 +184,25 @@ export const useDnDSort = <T>(defaultItems: T[]): DnDSortResult<T>[] => {
             if (itemIndex === -1)
               dndItems.push({ key, value, element, position });
 
+            if (dragElement?.key === key) {
+              // ドラッグ要素のズレを計算する;
+              const dragX = dragElement.position.x - position.x;
+              const dragY = dragElement.position.y - position.y;
+
+              // 入れ替え時のズレをなくす
+              // NOTE: 引数に再代入してるので怒られてるけど一旦無視
+              // eslint-disable-next-line no-param-reassign
+              element.style.transform = `translate(${dragX}px, ${dragY}px)`;
+
+              // マウスポインターの位置も再計算してズレをなくす
+              pointerPosition.x -= dragX;
+              pointerPosition.y -= dragY;
+            }
+
             // 要素を更新する
             state.dndItems[itemIndex] = { key, value, element, position };
           },
+
           onMouseDown: (event: React.MouseEvent<HTMLElement>) => {
             // ドラッグする要素(DOM)
             const element = event.currentTarget;

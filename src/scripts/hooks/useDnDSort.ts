@@ -33,10 +33,32 @@ interface DnDSortResult<T> {
   };
 }
 
+/**
+ * マウスポインターが要素と重なっているか判定する
+ *
+ * @param {MouseEvent} event - マウスイベント
+ * @param {HTMLElement} element - 重なりを判定する要素
+ * @return {boolean} - 要素が重なっているかどうか
+ */
+const isHover = (event: MouseEvent, element: HTMLElement): boolean => {
+  // マウスポインターの座標を取得
+  const { clientX, clientY } = event;
+
+  // 重なりを判定する要素のサイズと座標を取得
+  const rect = element.getBoundingClientRect();
+
+  // マウスポインターが要素と重なっているかを判定する
+  return (
+    clientY < rect.bottom &&
+    clientY > rect.top &&
+    clientX < rect.right &&
+    clientX > rect.left
+  );
+};
+
 export const useDnDSort = <T>(defaultItems: T[]): DnDSortResult<T>[] => {
   // 描画内容と紐づいているのでuseStateで管理する
   const [items] = useState(defaultItems);
-  // const [items, setItems] = useState(defaultItems);
 
   // 状態をrefで管理する
   const state = useRef<DnDRef<T>>({
@@ -50,7 +72,7 @@ export const useDnDSort = <T>(defaultItems: T[]): DnDSortResult<T>[] => {
   // ドラッグ中の処理
   const onMouseMove = (event: MouseEvent) => {
     const { clientX, clientY } = event;
-    const { dragElement, pointerPosition } = state;
+    const { dndItems, dragElement, pointerPosition } = state;
 
     // ドラッグしてなければ何もしない
     if (!dragElement) return;
@@ -65,6 +87,30 @@ export const useDnDSort = <T>(defaultItems: T[]): DnDSortResult<T>[] => {
     dragStyle.zIndex = '100';
     dragStyle.cursor = 'grabbling';
     dragStyle.transform = `translate(${x}px, ${y}px)`;
+
+    // console.log(state);
+    // まだ確認できない場合は処理を終了する
+    if (!state.canCheckHovered) return;
+
+    // 確認できないようにする
+    state.canCheckHovered = false;
+
+    // 300ms後に確認できるようにする
+    setTimeout(() => {
+      state.canCheckHovered = true;
+    }, 300);
+
+    // ドラッグしている要素の配列の位置を取得
+    const dragIndex = dndItems.findIndex(({ key }) => key === dragElement.key);
+
+    // ホバーされている要素の配列の位置を取得
+    const hoveredIndex = dndItems.findIndex(
+      ({ element }, index) => index !== dragIndex && isHover(event, element),
+    );
+
+    if (hoveredIndex !== -1) {
+      // ホバーしていればコンソール画面に"Hello World!"を表示
+    }
   };
 
   // ドラッグが終了した時の処理

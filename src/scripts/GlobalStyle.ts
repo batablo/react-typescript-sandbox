@@ -1,9 +1,15 @@
 import { createGlobalStyle } from 'styled-components';
+import 'destyle.css';
 
 const GlobalStyle = createGlobalStyle`
   body {
-    margin: 20px;
-    font: 14px 'Century Gothic', Futura, sans-serif;
+    font-family:
+      'Helvetica Neue',
+      Arial,
+      'Hiragino Kaku Gothic ProN',
+      'Hiragino Sans',
+      Meiryo,
+      sans-serif;
   }
 `;
 

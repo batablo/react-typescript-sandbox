@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import React from 'react';
-
+import { FC } from 'react';
 import { Header } from './Header';
 import './page.css';
 
@@ -11,7 +10,7 @@ export interface PageProps {
   onCreateAccount: () => void;
 }
 
-export const Page: React.FC<PageProps> = ({
+export const Page: FC<PageProps> = ({
   user,
   onLogin,
   onLogout,

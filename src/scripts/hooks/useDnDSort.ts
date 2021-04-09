@@ -1,6 +1,6 @@
 // NOTE: events.ref内のelement引数に3- 再代入してるので怒られてるけど一旦無視
 /* eslint-disable no-param-reassign */
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 // 座標の型
 interface Position {

@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import React from 'react';
-
+import { FC } from 'react';
 import { Button } from './Button';
 import './header.css';
 
@@ -11,7 +10,7 @@ export interface HeaderProps {
   onCreateAccount: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({
+export const Header: FC<HeaderProps> = ({
   user,
   onLogin,
   onLogout,

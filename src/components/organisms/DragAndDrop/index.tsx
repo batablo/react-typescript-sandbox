@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import styled from 'styled-components';
 import { useDnDSort } from 'scripts/hooks/useDnDSort';
 import { ImageCard } from 'components/atoms/ImageCard';

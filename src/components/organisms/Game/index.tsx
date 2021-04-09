@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 import styled from 'styled-components';
 import { Board } from 'components/molecules/Board';
 import { Moves } from 'components/molecules/Moves';

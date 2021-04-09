@@ -34,19 +34,29 @@ const Container = styled.div`
 `;
 
 const Header = styled.header`
-  margin-bottom: 40px;
-  font-size: 28px;
+  position: absolute;
+  top: 64px;
 
   > h1 {
-    margin-top: 16px;
+    font-size: 96px;
   }
 `;
 
 const Main = styled.main`
-  font-size: 16px;
+  font-size: 24px;
+  font-weight: bold;
+  color: lightgreen;
 `;
 
 const PageLink = styled.div`
+  > * {
+    margin-bottom: 36px;
+  }
+
+  > *:last-child {
+    margin-right: 0;
+  }
+
   > a {
     display: block;
     margin-top: 8px;

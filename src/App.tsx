@@ -10,7 +10,7 @@ export const App: FC = () => (
     <Route path={Routes.basePath} exact>
       <IndexPage />
     </Route>
-    <Route path={Routes.paths.game}>
+    <Route path={Routes.paths.reactTutorial}>
       <Game />
     </Route>
     <Route path={Routes.paths.dragAndDrop}>

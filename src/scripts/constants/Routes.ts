@@ -1,12 +1,12 @@
 const basePath = '/';
 
-const game = `${basePath}game`;
+const reactTutorial = `${basePath}reactTutorial`;
 const dragAndDrop = `${basePath}dragAndDrop`;
 
 export const Routes = {
   basePath,
   paths: {
-    game,
+    reactTutorial,
     dragAndDrop,
   },
 } as const;

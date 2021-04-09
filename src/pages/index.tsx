@@ -11,7 +11,7 @@ export const IndexPage: FC = () => {
         </Header>
         <Main>
           <PageLink>
-            <Link to="/game">チュートリアル(五目並べ)</Link>
+            <Link to="/reactTutorial">チュートリアル(五目並べ)</Link>
             <Link to="/dragAndDrop">ドラッグドロップで画像並び替え</Link>
           </PageLink>
         </Main>

@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { useDnDSort } from 'scripts/hooks/useDnDSort';
+import { ImageCard } from 'components/atoms/ImageCard';
 import sample01 from 'assets/images/sample/01.jpeg';
 import sample02 from 'assets/images/sample/02.jpeg';
 import sample03 from 'assets/images/sample/03.jpeg';
@@ -31,9 +32,7 @@ export const DragAndDrop: FC = () => {
     <Body>
       <Container>
         {results.map((item) => (
-          <ImageCard key={item.key} {...item.events}>
-            <Image src={item.value} alt="ソート可能な画像" />
-          </ImageCard>
+          <ImageCard {...item} />
         ))}
       </Container>
     </Body>
@@ -55,21 +54,4 @@ const Container = styled.div`
   width: 100%;
   max-width: 350px;
   max-height: 500px;
-`;
-
-const ImageCard = styled.div`
-  width: 100px;
-  height: 130px;
-  margin: 3;
-  overflow: hidden;
-  cursor: grab;
-  user-select: none;
-  border-radius: 5px;
-`;
-
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  object-fit: cover;
 `;

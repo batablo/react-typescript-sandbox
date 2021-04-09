@@ -32,7 +32,7 @@ export const DragAndDrop: FC = () => {
     <Body>
       <Container>
         {results.map((item) => (
-          <ImageCard {...item} />
+          <ImageCard index={item.key} {...item} />
         ))}
       </Container>
     </Body>

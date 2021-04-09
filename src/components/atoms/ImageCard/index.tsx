@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 
 type ImageCardProps<T> = {
-  key: string;
+  index: string;
   value: T;
   events: {
     ref: (element: HTMLElement | null) => void;
@@ -11,11 +11,11 @@ type ImageCardProps<T> = {
 };
 
 export const ImageCard: FC<ImageCardProps<string>> = ({
-  key,
+  index,
   value,
   events,
 }) => (
-  <ImageCardWrapper key={key} {...events}>
+  <ImageCardWrapper key={index} {...events}>
     <Image src={value} alt="ソート可能な画像" />
   </ImageCardWrapper>
 );

@@ -29,23 +29,13 @@ export const DragAndDrop: FC = () => {
   const results = useDnDSort(imageList);
 
   return (
-    <Body>
-      <Container>
-        {results.map((item) => (
-          <ImageCard index={item.key} {...item} />
-        ))}
-      </Container>
-    </Body>
+    <Container>
+      {results.map((item) => (
+        <ImageCard index={item.key} {...item} />
+      ))}
+    </Container>
   );
 };
-
-const Body = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  overflow: hidden;
-`;
 
 const Container = styled.div`
   display: flex;

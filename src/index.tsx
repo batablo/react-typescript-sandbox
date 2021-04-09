@@ -4,10 +4,10 @@ import { createBrowserHistory } from 'history';
 import GlobalStyle from 'scripts/GlobalStyle';
 import { App } from './App';
 
-// const history = createBrowserHistory({});
+const history = createBrowserHistory({});
 
 ReactDOM.render(
-  <Router history={createBrowserHistory({})}>
+  <Router history={history}>
     <GlobalStyle />
     <App />
   </Router>,

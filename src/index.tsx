@@ -1,15 +1,12 @@
 import ReactDOM from 'react-dom';
-import { Router } from 'react-router-dom';
-import { createHashHistory } from 'history';
+import { HashRouter } from 'react-router-dom';
 import GlobalStyle from 'scripts/GlobalStyle';
 import { App } from './App';
 
-const history = createHashHistory({});
-
 ReactDOM.render(
-  <Router history={history}>
+  <HashRouter>
     <GlobalStyle />
     <App />
-  </Router>,
+  </HashRouter>,
   document.getElementById('root'),
 );

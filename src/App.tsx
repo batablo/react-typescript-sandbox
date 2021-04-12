@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 import { Routes } from 'scripts/constants';
 import { IndexPage } from 'pages';
 import { ReactTutorialPage } from 'pages/ReactTutorial';
@@ -18,3 +18,5 @@ export const App: FC = () => (
     </Route>
   </>
 );
+
+export default withRouter(App);

@@ -1,10 +1,10 @@
 import ReactDOM from 'react-dom';
 import { Router } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
+import { createHashHistory } from 'history';
 import GlobalStyle from 'scripts/GlobalStyle';
 import { App } from './App';
 
-const history = createBrowserHistory({});
+const history = createHashHistory({});
 
 ReactDOM.render(
   <Router history={history}>

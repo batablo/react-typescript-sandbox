@@ -4,15 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>React App</title>
-    <script>
-      // GitHub Pages での SPA アドレス解決用
-      (() => {
-        const query = window.location.search;
-        if (query.startsWith('?p=')) {
-          const route = decodeURIComponent(query.substr(3));
-          window.history.replaceState(null, null, route);
-        }
-      })();
     </script>
     <script src="script/index.tsx" async></script>
   </head>
